@@ -30,7 +30,6 @@ export default {
   created(){
     
     //getCode()
-    //this.getSubscribe()
   },
   methods:{
     getEvent(data){
@@ -38,10 +37,11 @@ export default {
     },
     //判断是否关注公众号
     // getSubscribe(){
-    //   let access_token = localStorage.getItem('accessToken');
-    //   let openid = localStorage.getItem('openId');
+    //   let access_token = '40_3E6VQ-QaahgXMTFnF4XE96aawVnXIfWno9pyVvmvnAC2m2eR9wqHErUhCuy2OWbsL9';
+    //   let openid = 'oqPC3uJjtTr-nOqmvKd2y0k1I3cM';
     //   this.$ajax(`https://api.weixin.qq.com/cgi-bin/user/info?access_token=${access_token}&openid=${openid}&lang=zh_CN`)
     //   .then(res=>{
+    //     console.log(res)
     //     if(res.subscribe!=1){
     //       window.location.href = 'https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA5OTA2MjQ0MA==&scene=124#wechat_redirect'
     //     }

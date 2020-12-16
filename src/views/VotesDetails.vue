@@ -56,6 +56,7 @@
   import md5 from 'js-md5';
   import { Toast } from 'vant';
   import {wxShare} from "../assets/js/wxshare.js";
+  import {getCode} from "../assets/js/wxapi.js";
   let votesBtnLocks =false;
   export default {
     name:'VotesDetails',
@@ -90,7 +91,7 @@
         link:url,
         imgUrl:baseUrl+this.headerImg
       }
-      let shareUrl=window.location.href.split("#")[0]
+      let shareUrl=encodeURIComponent(window.location.href.split("#")[0])
       let data={
         share_url:shareUrl
       };
@@ -128,24 +129,29 @@
         votesBtnLocks = true;
         this.openId = localStorage.getItem('openId');
         this.userId = localStorage.getItem('userId');
-        let voteSecret = md5('work_vote'+this.userId.toString()+workId.toString())
-        let data={
-          work_id:workId,
-          user_id:this.userId,
-          user_open_id:this.openId,
-          vote_secret:voteSecret
-        }
-        getUserVote(data).then(result=>{
-          if(result.status == true){
-            Toast.success({
-              message: result.msg,
-              duration: 2000,
-            });
-            this.votesDetails.votes_number = this.votesDetails.votes_number+1
-          }
+        //未登录
+        if(this.openId==undefined || this.userId==undefined){
+          getCode()
           votesBtnLocks = false;
-        })
-         
+        }else {
+          let voteSecret = md5('work_vote'+this.userId.toString()+workId.toString())
+          let data={
+            work_id:workId,
+            user_id:this.userId,
+            user_open_id:this.openId,
+            vote_secret:voteSecret
+          }
+          getUserVote(data).then(result=>{
+            if(result.status == true){
+              Toast.success({
+                message: result.msg,
+                duration: 2000,
+              });
+              this.votesDetails.votes_number = this.votesDetails.votes_number+1
+            }
+            votesBtnLocks = false;
+          })
+        }
       },
     }
   }

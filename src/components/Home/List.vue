@@ -102,13 +102,18 @@
           link:url,
           imgUrl:'http://workvote.shangyouyun.cn/uploads/20201215/5ff1dc2fb68d7d4bc18799a67e347a1a.jpg'
         }
-        //let shareUrl=window.location.href.split("#")[0]
+        let shareUrl=encodeURIComponent(window.location.href.split("#")[0])
         let data={
-          share_url:'http://workvote.shangyouyun.cn'
+          share_url:shareUrl
         };
         getWxShare(data).then(res=>{
           if(res.status == true){
             wxShare(res.data,option)
+            alert('noncestr: '+res.data.noncestr)
+            alert('timestamp: '+res.data.timestamp)
+            alert('signature: '+res.data.signature)
+            alert('appid: '+res.data.appid)
+            alert('jsapi_ticket: '+res.data.jsapi_ticket)
           }
         })
       },
@@ -120,7 +125,7 @@
         //投票前，先判断是否已经授权登录 openid用来判断是否已经授权登录
         this.openId = localStorage.getItem('openId');
         this.userId = localStorage.getItem('userId');
-        //未关注
+        //未登录
         if(this.openId==undefined || this.userId==undefined){
           getCode()
           votesBtnLocks = false;
