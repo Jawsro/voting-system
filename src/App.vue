@@ -29,11 +29,11 @@
           title: "首页",
           icon:"home-o"
         },{
-          name:'Ranking',
+          name:'ranking',
           title: "排行榜",
           icon:"bar-chart-o"
         },{
-          name:'Rules',
+          name:'rules',
           title: "活动规则",
           icon:"label-o"
         }]

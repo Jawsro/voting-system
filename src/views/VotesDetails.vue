@@ -85,13 +85,15 @@
     methods:{
       _getWxShare(){
       let url = window.location.href;
-    
       let option={
         desc:`${this.votesDetails.author_name}的${this.votesDetails.id}号作品正在参赛，快来帮忙投票吧`,
         link:url,
         imgUrl:baseUrl+this.headerImg
       }
-      let shareUrl=encodeURIComponent(window.location.href.split("#")[0])
+      let shareUrl=window.location.href
+       if(shareUrl.indexOf('code') !=-1){
+            shareUrl = shareUrl.split('?code')[0]
+        }
       let data={
         share_url:shareUrl
       };
@@ -113,6 +115,7 @@
             this.votesDetails = result.data.works
             this.workImage = result.data.works.work_image
             this.headerImg = this.workImage[0].image_url
+            this._getWxShare()
           }
         })
       },
@@ -130,9 +133,8 @@
         this.openId = localStorage.getItem('openId');
         this.userId = localStorage.getItem('userId');
         //未登录
-        if(this.openId==undefined || this.userId==undefined){
+        if(this.openId =='undefined' || this.openId == undefined){
           getCode()
-          votesBtnLocks = false;
         }else {
           let voteSecret = md5('work_vote'+this.userId.toString()+workId.toString())
           let data={

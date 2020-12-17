@@ -17,7 +17,7 @@ const routes = [
       requireAuth:true 
     }
   },{
-    path: "/Ranking",
+    path: "/ranking",
     name: "Ranking",
     component: Ranking,
     meta:{
@@ -25,7 +25,7 @@ const routes = [
       requireAuth:true 
     }
   },{
-    path: "/Rules",
+    path: "/rules",
     name: "Rules",
     component: Rules,
     meta:{
@@ -33,7 +33,7 @@ const routes = [
       requireAuth:true 
     }
   },{
-    path: "/VotesDetails",
+    path: "/votesdetails",
     name: "VotesDetails",
     component: VotesDetails,
     meta:{
@@ -51,8 +51,8 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  // mode: "history",
-   mode: "hash",
+ mode: "history",
+   //mode: "hash",
   base: process.env.BASE_URL,
   routes
 });

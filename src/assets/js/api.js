@@ -54,7 +54,7 @@ export function getUserInfo(data){
 export function getWxShare(data){
   return HttpRequest.getRequest({
       method: "POST",
-      url:  '/api/weixin/getSignature',
+      url: '/api/weixin/getSignature',
       data: data
   })
 }

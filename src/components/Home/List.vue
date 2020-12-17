@@ -90,30 +90,31 @@
       this.baseUrl = baseUrl;
       setTimeout(()=>{
          this._getWorkList();
+        
       },1000)
-      this._getWxShare();
+     this._getWxShare();
+      
     },
     methods:{
       _getWxShare(){
         let url = window.location.href;
-      
         let option={
           desc:'“魅力新城，印象伍家”，为记录和见证伍家岗“十三五”发展历程、可喜变化及丰硕成果，由伍家岗区委宣传部、伍家岗区融媒体中心、伍家岗区文联、伍家岗区摄影家协会联合举办“魅力新城·印象伍家”伍家岗区摄影大赛，通过镜头展现伍家岗的发展变化、生态环境、人文风貌和伍家儿女追求幸福生活努力奋斗的精神风貌，为谱写新时代伍家岗高质量发展新篇章注入强大的精神动力。',
           link:url,
           imgUrl:'http://workvote.shangyouyun.cn/uploads/20201215/5ff1dc2fb68d7d4bc18799a67e347a1a.jpg'
         }
-        let shareUrl=encodeURIComponent(window.location.href.split("#")[0])
+        let shareUrl=window.location.href
+         if(shareUrl.indexOf('code') !=-1){
+            shareUrl = shareUrl.split('?code')[0]
+        }
         let data={
           share_url:shareUrl
         };
         getWxShare(data).then(res=>{
           if(res.status == true){
             wxShare(res.data,option)
-            alert('noncestr: '+res.data.noncestr)
-            alert('timestamp: '+res.data.timestamp)
-            alert('signature: '+res.data.signature)
-            alert('appid: '+res.data.appid)
-            alert('jsapi_ticket: '+res.data.jsapi_ticket)
+            alert('joint_str:'+res.data.joint_str)
+            
           }
         })
       },
@@ -126,7 +127,7 @@
         this.openId = localStorage.getItem('openId');
         this.userId = localStorage.getItem('userId');
         //未登录
-        if(this.openId==undefined || this.userId==undefined){
+        if(this.openId =='undefined' || this.openId == undefined){
           getCode()
           votesBtnLocks = false;
         }else {
@@ -163,7 +164,7 @@
         this._getWorkList();
       },
       goVotesDetails(voteId,rankIndex){
-          this.$router.push({path:'VotesDetails', query:{voteId:voteId,rankIndex:rankIndex}})
+          this.$router.push({path:'votesdetails', query:{voteId:voteId,rankIndex:rankIndex}})
       },
       //作品列表
       _getWorkList(){
