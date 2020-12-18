@@ -7,10 +7,12 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 import { Lazyload } from 'vant';
 import 'lib-flexible';
+import fastClick from 'fastclick';
 
 Vue.use(Lazyload);
 Vue.config.productionTip = false;
 Vue.prototype.$ajax = axios;
+fastClick.attach(document.body);
 Vue.use(Vant);
 Vue.use(Lazyload, {
   lazyComponent: true,

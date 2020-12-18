@@ -1,7 +1,7 @@
 <template>
   <div class="rules" v-show='isShow'>
     <Banner @func='getEvent'></Banner>
-    <count-down></count-down>
+   <!-- <count-down></count-down>-->
     <div class='cut'></div>
     <div class='getrules'> 
       <h1 class='title'>“魅力新城·印象伍家”</h1>
@@ -76,12 +76,12 @@
 </template>
 <script>
   import Banner from "@/components/Home/Banner.vue";
-  import CountDown from "@/components/Home/Countdown.vue";
+  // import CountDown from "@/components/Home/Countdown.vue";
   export default {
     name: "Rules",
     components: {
        Banner,
-      CountDown,
+      // CountDown,
     },
     data(){
       return{

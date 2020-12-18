@@ -58,3 +58,12 @@ export function getWxShare(data){
       data: data
   })
 }
+
+//获取用户是否关注公众号
+export function getUserScribeInfo(data){
+  return HttpRequest.getRequest({
+      method: "POST",
+      url: '/api/weixin/getUserScribeInfo',
+      data: data
+  })
+}

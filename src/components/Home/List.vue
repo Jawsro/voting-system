@@ -21,9 +21,9 @@
       <div class='item' 
           v-for='(item,index) in WorkList'
           :key='index'
-          @click='goVotesDetails(item.id)'>
+          >
 
-        <div class='img'>
+        <div class='img' @click='goVotesDetails(item.id)'>
           <img alt="" v-lazy=" baseUrl+item.work_image[0].image_url" />
           <div class='msg'>
             <div class='name'>
@@ -43,7 +43,7 @@
 
         <div class='votes'>
           <p class='left'> {{item.votes_number }}票</p>
-          <p class='right votes-btn' @click.stop='votesBtn(item.id)'> 
+          <p class='right votes-btn' @click='votesBtn(item.id)'> 
             <van-icon name="like" class='padding-s'/>
             投TA一票
           </p>
@@ -57,13 +57,13 @@
 </template>
 <script> 
   import {baseUrl} from "../../assets/js/request.js";
-  import {getWorkList,getUserVote} from "../../assets/js/api.js";
+  import {getWorkList,getUserVote,getUserScribeInfo} from "../../assets/js/api.js";
   import md5 from 'js-md5';
   import infiniteScroll from "vue-infinite-scroll";
   import { Toast } from 'vant';
-  import {getCode} from "../../assets/js/wxapi.js";
   import {getWxShare} from "../../assets/js/api.js";
   import {wxShare} from "../../assets/js/wxshare.js";
+  import { Dialog } from 'vant';
   let votesBtnLocks =false;
   export default {
     directives: {infiniteScroll},
@@ -92,29 +92,26 @@
          this._getWorkList();
         
       },1000)
-     this._getWxShare();
-      
+      this._getWxShare();
     },
     methods:{
       _getWxShare(){
-        let url = window.location.href;
-        let option={
-          desc:'“魅力新城，印象伍家”，为记录和见证伍家岗“十三五”发展历程、可喜变化及丰硕成果，由伍家岗区委宣传部、伍家岗区融媒体中心、伍家岗区文联、伍家岗区摄影家协会联合举办“魅力新城·印象伍家”伍家岗区摄影大赛，通过镜头展现伍家岗的发展变化、生态环境、人文风貌和伍家儿女追求幸福生活努力奋斗的精神风貌，为谱写新时代伍家岗高质量发展新篇章注入强大的精神动力。',
-          link:url,
-          imgUrl:'http://workvote.shangyouyun.cn/uploads/20201215/5ff1dc2fb68d7d4bc18799a67e347a1a.jpg'
-        }
-        let shareUrl=window.location.href
+        let shareUrl=window.location.href;
          if(shareUrl.indexOf('code') !=-1){
             shareUrl = shareUrl.split('?code')[0]
         }
+        let option={
+          desc:'“魅力新城，印象伍家”，为记录和见证伍家岗“十三五”发展历程、可喜变化及丰硕成果，由伍家岗区委宣传部、伍家岗区融媒体中心、伍家岗区文联、伍家岗区摄影家协会联合举办“魅力新城·印象伍家”伍家岗区摄影大赛，通过镜头展现伍家岗的发展变化、生态环境、人文风貌和伍家儿女追求幸福生活努力奋斗的精神风貌，为谱写新时代伍家岗高质量发展新篇章注入强大的精神动力。',
+          link:'http://workvote.shangyouyun.cn/',
+          imgUrl:'http://workvote.shangyouyun.cn/uploads/20201215/5ff1dc2fb68d7d4bc18799a67e347a1a.jpg'
+        }
+        
         let data={
           share_url:shareUrl
         };
         getWxShare(data).then(res=>{
           if(res.status == true){
             wxShare(res.data,option)
-            alert('joint_str:'+res.data.joint_str)
-            
           }
         })
       },
@@ -127,9 +124,36 @@
         this.openId = localStorage.getItem('openId');
         this.userId = localStorage.getItem('userId');
         //未登录
-        if(this.openId =='undefined' || this.openId == undefined){
-          getCode()
-          votesBtnLocks = false;
+        if(localStorage.getItem('openId') == null|| localStorage.getItem('openId') == undefined){
+          Dialog.alert({
+            title: '提示',
+            message: '微信授权未成功，请刷新页面重新授权',
+          }).then(() => {
+            // on close
+            votesBtnLocks = false;
+          });
+        }else if(localStorage.getItem('subscribe')!=1){
+          //判断是否关注公众号
+          getUserScribeInfo({open_id:this.openId}).then(res=>{
+          if(res.status == true){
+            //没有关注引导跳转关注公众号
+            if(res.subscribe ==0){
+               Dialog.confirm({
+                title: '提示',
+                message: '投票需要关注公众号，确定关注公众号吗？',
+              })
+              .then(() => {
+                window.location.href = 'https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MjM5ODc2ODU0OQ==&scene=124#wechat_redirect'
+              })
+              .catch(() => {
+                // on cancel
+              });
+            }else{
+               localStorage.setItem('subscribe',res.subscribe);
+            }
+           }
+           votesBtnLocks = false;
+        })
         }else {
           //已经授权登录了
           let voteSecret = md5('work_vote'+this.userId.toString()+workId.toString())
@@ -140,18 +164,18 @@
             vote_secret:voteSecret
           }
           getUserVote(data).then(result=>{
-            if(result.status == true){
-              Toast({
-                message: result.msg,
-                duration: 2000,
-              });
-              this.WorkList = this.WorkList.map(value=>{
-                if(value.id==workId){
-                  value.votes_number = value.votes_number+1
-                }
-                return value
-              })
-            }
+              if(result.status == true){
+                Toast({
+                  message: result.msg,
+                  duration: 2000,
+                });
+                this.WorkList = this.WorkList.map(value=>{
+                  if(value.id==workId){
+                    value.votes_number = value.votes_number+1
+                  }
+                  return value
+                })
+              }
             votesBtnLocks = false;
           })
         }

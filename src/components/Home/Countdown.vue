@@ -1,6 +1,6 @@
 <template>
   <div class='countdown' >
-    <div class='text' v-show ='!textIsShow'>
+    <div class='text' v-show ='!textIsShow' @click='clear'>
       <span>距离摄影比赛投票截止：</span>
     </div>
     <div class='text' v-show ='textIsShow'>
@@ -28,17 +28,24 @@ export default {
       minutes:'',
       seconds:'',
       isEnd:false,//倒计时是否结束
-      endTime:'',//应为接口获取到的结束时间
+      // endTime:'',//应为接口获取到的结束时间
       isShow:false,
       textIsShow:false
     }
   },
+  props:{
+    endTime:String
+  },
   created(){
+  
     this.setEndTime()
   },
   methods:{ 
+    clear(){
+      localStorage.clear()
+    },
    setEndTime(){
-      this.endTime = localStorage.getItem('endTime');
+      // this.endTime = localStorage.getItem('endTime');
       let that = this;
       let interval = setInterval(()=>{
           let date = new Date(that.endTime)-(new Date())

@@ -13,7 +13,7 @@ const routes = [
     name: "Home",
     component: Home,
     meta:{
-      keepAlive:true,//需要被缓存的组件
+      keepAlive:false,//需要被缓存的组件
       requireAuth:true 
     }
   },{
@@ -21,7 +21,7 @@ const routes = [
     name: "Ranking",
     component: Ranking,
     meta:{
-      keepAlive:false, //不需要被缓存的组件
+      keepAlive:true, //不需要被缓存的组件
       requireAuth:true 
     }
   },{
@@ -32,7 +32,7 @@ const routes = [
       keepAlive:true, //需要被缓存的组件
       requireAuth:true 
     }
-  },{
+  },{//作品详情页
     path: "/votesdetails",
     name: "VotesDetails",
     component: VotesDetails,
