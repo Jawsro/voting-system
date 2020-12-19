@@ -1,6 +1,6 @@
 <template>
   <div class='countdown' >
-    <div class='text' v-show ='!textIsShow' @click='clear'>
+    <div class='text' v-show ='!textIsShow'>
       <span>距离摄影比赛投票截止：</span>
     </div>
     <div class='text' v-show ='textIsShow'>
@@ -40,12 +40,8 @@ export default {
   
     this.setEndTime()
   },
-  methods:{ 
-    clear(){
-      localStorage.clear()
-    },
+  methods:{
    setEndTime(){
-      // this.endTime = localStorage.getItem('endTime');
       let that = this;
       let interval = setInterval(()=>{
           let date = new Date(that.endTime)-(new Date())

@@ -21,7 +21,7 @@ const routes = [
     name: "Ranking",
     component: Ranking,
     meta:{
-      keepAlive:true, //不需要被缓存的组件
+      keepAlive:false, //不需要被缓存的组件
       requireAuth:true 
     }
   },{

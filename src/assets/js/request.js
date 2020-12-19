@@ -29,10 +29,11 @@ var  HttpRequest={
           resolve(res.data);
         }).catch(err => {
           reject();
-          Dialog.alert({
-            title: '网络错误提示',
-            message: err.message,
-          })
+          // Dialog.alert({
+          //   title: '网络错误提示',
+          //   message: err.message,
+          // })
+          console.log(err)
         })
     }
 }
