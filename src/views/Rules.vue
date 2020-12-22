@@ -36,17 +36,17 @@
           <p class='padding-small'>指导单位：伍家岗区摄影家协会</p>
         </div>
 
-        <div class='sort'>
+        <!--<div class='sort'>
           <h3 class='small-title'>三、时间安排</h3>
           <p class='margin-bottom'>本次活动时间为2020年10月-2020年12月。具体分为以下几个阶段：</p>
           <p class='margin-bottom'>1、作品征集（2020年10月10日-11月10日）：面向全社会征集“魅力新城·印象伍家”相关主题摄影作品。</p>
           <p class='margin-bottom'>2、作品线上展示（2020年11月10日-11月30日）：经过组委会初步筛选，合格作品将上传至“魅力新城伍家岗”官方微信进行展示。</p>
           <p class='margin-bottom'>3、作品评选（2020年12月）：评委会经过初选、终选以及网络投票结果综合评选出获奖作品并进行公示。</p>
           <p class='margin-bottom'>4、颁奖仪式（2020年12月底）：所有获奖作品将在“魅力新城伍家岗”官微上集中展示，并为入选作品颁发奖品及荣誉证书。</p>
-        </div>
+        </div>-->
 
         <div class='sort'>
-          <h3 class='small-title'>四、活动规则</h3>
+          <h3 class='small-title'>三、活动规则</h3>
           <p class='margin-bottom'>1.一个微信号24小时限投五票，五票须分别投给不同参赛作品，给一个作品仅能投一票。</p>
           <p class='margin-bottom'>2.投票微信号仅限湖北省内范围。</p>
           <p class='margin-bottom'>3.本次活动严禁一切刷票行为，系统全程监控，系统将自动冻结存在恶意刷票嫌疑选手，24小时解冻。若冻结两次以上， 一经核实，将取消参赛资格。</p>
@@ -57,7 +57,7 @@
         </div>
         
         <div class='sort'>
-          <h3 class='small-title'>五、奖项设置</h3>
+          <h3 class='small-title'>四、奖项设置</h3>
           <p class='padding-small margin-bottom'>活动组委会将邀请摄影专家组成评审委员会，对征集的作品进行初评、终评以及网络投票评选，最终成绩以专家组评审（70%）和网络投票（30%）综合评定，获奖作品将颁发荣誉证书和奖品。</p>
           <p class='padding-small text-color'>一等奖10名，华为P40手机一部</p>
           <p class='padding-small text-color'>二等奖15名，华为 Sound X 智能音箱一个</p>
@@ -66,7 +66,7 @@
         </div>
 
         <div class='sort'>
-          <h3 class='small-title'>六、征集方式</h3>
+          <h3 class='small-title'>五、征集方式</h3>
           <p class='padding-small text-color'>投稿邮箱：mlxcwjgzj@163.com</p>
           <p class='padding-small'>大赛组委会咨询电话：0717-6562251</p>
         </div>

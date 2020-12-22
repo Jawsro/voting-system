@@ -30,7 +30,7 @@
     <div class='votes-list'>
       <div v-for='(item,index) in workImage' 
             :key='index'>
-        <img :src="baseUrl+item.image_url" alt="">
+        <img :src="baseUrl+item.image_url" alt="" @click='bigImg(item.image_url)'>
       </div>
     </div>
     <div class='btns'>
@@ -55,8 +55,9 @@
   import {baseUrl} from "../assets/js/request.js";
   import md5 from 'js-md5';
   import { Toast } from 'vant';
-   import { Dialog } from 'vant';
+  import { Dialog } from 'vant';
   import {wxShare} from "../assets/js/wxshare.js";
+  import wx from 'weixin-js-sdk' // 引入微信SDK
   let votesBtnLocks =false;
   export default {
     name:'VotesDetails',
@@ -83,13 +84,23 @@
       this._getWxShare()
     },
     methods:{
+      bigImg(url){
+        let imgUrlArr=[];
+        this.workImage.forEach(item=>{
+          imgUrlArr.push(this.baseUrl+item.image_url)
+        })
+        wx.previewImage({
+          current:this.baseUrl+url, // 当前显示图片的http链接
+          urls:imgUrlArr // 需要预览的图片http链接列表
+        });
+      },
       _getWxShare(){
         let shareUrl=window.location.href
        if(shareUrl.indexOf('code') !=-1){
             shareUrl = shareUrl.split('?code')[0]
         }
       let option={
-        desc:`${this.votesDetails.author_name}的${this.votesDetails.id}号作品正在参赛，快来帮忙投票吧`,
+        desc:`${this.votesDetails.author_name}的${this.votesDetails.id}号作品正在参赛，快来给他点赞吧`,
         link:shareUrl,
         imgUrl:baseUrl+this.headerImg
       }
