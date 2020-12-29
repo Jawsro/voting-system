@@ -124,7 +124,7 @@
         let option={
           desc:'魅力新城  印象伍家',
           link:'http://workvote.shangyouyun.cn/',
-          imgUrl:'http://workvote.shangyouyun.cn/uploads/20201215/5ff1dc2fb68d7d4bc18799a67e347a1a.jpg'
+          imgUrl:'http://workvote.shangyouyun.cn/uploads/20201221/c42f51e941df80570ba801460081dd73.jpg'
         }
         
         let data={
