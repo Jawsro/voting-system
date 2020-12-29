@@ -26,13 +26,12 @@ export default {
   },
   created(){
     let openId = localStorage.getItem('openId');
-    if(openId =='undefined' || openId == undefined){
+    if(openId == null || openId == undefined){
       getCode()
     }else{
       //已经授权判断是否关注公众号
       //没有关注
-      if(localStorage.getItem('subscribe')!=1 || localStorage.getItem('subscribe')!='1'){
-        //console.log('')
+      if(localStorage.getItem('subscribe')!=1){
         getUserScribeInfo({open_id:openId}).then(res=>{
           if(res.status == true){
             //缓存是否已关注公众号

@@ -35,7 +35,6 @@ export default {
           if(result.status == true){
             this.BannerImg = result.data.activity.header_img;
             localStorage.setItem('activityId',result.data.activity.id);
-            // localStorage.setItem('endTime',result.data.activity.end_at);
             this.endTime = result.data.activity.end_at
           }
       })

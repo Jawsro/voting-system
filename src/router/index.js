@@ -4,7 +4,6 @@ import Home from "../views/Home.vue";
 import Ranking from "../views/Ranking.vue";
 import Rules from "../views/Rules.vue";
 import VotesDetails from "../views/VotesDetails.vue";
-import Authorize from "../views/Authorize.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -39,13 +38,6 @@ const routes = [
     meta:{
       keepAlive:false, //需要被缓存的组件
       requireAuth:true 
-    }
-  },{
-    path: "/Authorize",
-    name: "Authorize",
-    component: Authorize,
-    meta:{
-      keepAlive:false, //需要被缓存的组件
     }
   }
 ];

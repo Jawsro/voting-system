@@ -28,11 +28,13 @@
     </div>
 
     <div class='votes-list'>
-      <div v-for='(item,index) in workImage' 
+       <div v-for='(item,index) in workImage' 
             :key='index'>
-        <img :src="baseUrl+item.image_url" alt="">
+        <img :src="baseUrl+item.image_url" alt="" @click='bigImg(item.image_url)'>
       </div>
-    </div>
+   </div>
+
+
     <div class='btns'>
       <div class='votes-btn' @click.stop='votesBtn(votesDetails.id)'>
         <img src="../assets/img/zan.png" alt="">
@@ -41,6 +43,7 @@
         <img src="../assets/img/share.png" alt="">
       </div>
     </div>
+
 
     <van-action-sheet 
       v-model="showShare" 
@@ -55,8 +58,10 @@
   import {baseUrl} from "../assets/js/request.js";
   import md5 from 'js-md5';
   import { Toast } from 'vant';
-   import { Dialog } from 'vant';
+  import { Dialog } from 'vant';
   import {wxShare} from "../assets/js/wxshare.js";
+  import wx from 'weixin-js-sdk' // 引入微信SDK
+
   let votesBtnLocks =false;
   export default {
     name:'VotesDetails',
@@ -72,7 +77,8 @@
           baseUrl:'',
           isShow:false,
           openId:null,
-          userId:null
+          userId:null,
+          swpierIsShow:false
       }
     },
     created(){
@@ -83,6 +89,21 @@
       this._getWxShare()
     },
     methods:{
+      clickImg(){
+        this.swpierIsShow = true
+      },
+      bigImg(url){
+        let imgUrlArr=[];
+        this.workImage.forEach(item=>{
+          imgUrlArr.push(this.baseUrl+item.image_url)
+        })
+        wx.previewImage({
+          current:this.baseUrl+url, // 当前显示图片的http链接
+          urls:imgUrlArr // 需要预览的图片http链接列表
+        });
+        // console.log(imgUrlArr)
+        //  console.log(this.baseUrl+url)
+      },
       _getWxShare(){
         let shareUrl=window.location.href
        if(shareUrl.indexOf('code') !=-1){
@@ -116,6 +137,9 @@
             this.workImage = result.data.works.work_image
             this.headerImg = this.workImage[0].image_url
             this._getWxShare()
+
+            this.$previewRefresh();
+            
           }
         })
       },
@@ -187,6 +211,17 @@
 </script>
 <style lang="stylus" scoped>
   @import "../assets/css/common.styl";
+  .close-swiper
+    position:absolute
+    top:10px
+    right:10px
+    width:40px
+    height:40px
+  .img-swiper
+    position:absolute
+    top:0px
+    right:0px
+    left:0
   .votes-details
     .votes-msg
       padding:$padding-medium

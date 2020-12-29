@@ -64,6 +64,8 @@
   import {getWxShare} from "../../assets/js/api.js";
   import {wxShare} from "../../assets/js/wxshare.js";
   import { Dialog } from 'vant';
+  import {getUserScribeInfo} from "../assets/js/api.js";
+  import {getCode} from "../assets/js/wxapi.js";
   let votesBtnLocks =false;
   export default {
     directives: {infiniteScroll},
@@ -93,15 +95,34 @@
         
       },1000)
       this._getWxShare();
+      this.panduan();
     },
     methods:{
+      panduan(){
+        let openId = localStorage.getItem('openId');
+        if(openId == null || openId == undefined){
+          getCode()
+        }else{
+          //已经授权判断是否关注公众号
+          //没有关注
+          if(localStorage.getItem('subscribe')!=1 || localStorage.getItem('subscribe')!='1'){
+            //console.log('')
+            getUserScribeInfo({open_id:openId}).then(res=>{
+              if(res.status == true){
+                //缓存是否已关注公众号
+                localStorage.setItem('subscribe',res.subscribe);
+              }
+            })
+          }
+        }
+      },
       _getWxShare(){
         let shareUrl=window.location.href;
          if(shareUrl.indexOf('code') !=-1){
             shareUrl = shareUrl.split('?code')[0]
         }
         let option={
-          desc:'“魅力新城，印象伍家”，为记录和见证伍家岗“十三五”发展历程、可喜变化及丰硕成果，由伍家岗区委宣传部、伍家岗区融媒体中心、伍家岗区文联、伍家岗区摄影家协会联合举办“魅力新城·印象伍家”伍家岗区摄影大赛，通过镜头展现伍家岗的发展变化、生态环境、人文风貌和伍家儿女追求幸福生活努力奋斗的精神风貌，为谱写新时代伍家岗高质量发展新篇章注入强大的精神动力。',
+          desc:'魅力新城  印象伍家',
           link:'http://workvote.shangyouyun.cn/',
           imgUrl:'http://workvote.shangyouyun.cn/uploads/20201215/5ff1dc2fb68d7d4bc18799a67e347a1a.jpg'
         }
