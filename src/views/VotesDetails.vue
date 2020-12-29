@@ -60,8 +60,7 @@
   import { Toast } from 'vant';
   import { Dialog } from 'vant';
   import {wxShare} from "../assets/js/wxshare.js";
-  import wx from 'weixin-js-sdk' // 引入微信SDK
-
+  import wx from 'weixin-js-sdk';// 引入微信SDK
   let votesBtnLocks =false;
   export default {
     name:'VotesDetails',
@@ -77,8 +76,7 @@
           baseUrl:'',
           isShow:false,
           openId:null,
-          userId:null,
-          swpierIsShow:false
+          userId:null
       }
     },
     created(){
@@ -89,9 +87,6 @@
       this._getWxShare()
     },
     methods:{
-      clickImg(){
-        this.swpierIsShow = true
-      },
       bigImg(url){
         let imgUrlArr=[];
         this.workImage.forEach(item=>{
@@ -101,8 +96,6 @@
           current:this.baseUrl+url, // 当前显示图片的http链接
           urls:imgUrlArr // 需要预览的图片http链接列表
         });
-        // console.log(imgUrlArr)
-        //  console.log(this.baseUrl+url)
       },
       _getWxShare(){
         let shareUrl=window.location.href
@@ -110,7 +103,7 @@
             shareUrl = shareUrl.split('?code')[0]
         }
       let option={
-        desc:`${this.votesDetails.author_name}的${this.votesDetails.id}号作品正在参赛，快来帮忙投票吧`,
+        desc:`${this.votesDetails.author_name}的${this.votesDetails.id}号作品正在参赛，快来给他点赞吧`,
         link:shareUrl,
         imgUrl:baseUrl+this.headerImg
       }
