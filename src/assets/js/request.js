@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {Dialog} from 'vant';
 
-var baseUrl = "http://test.vote.net";
-//var baseUrl = "http://workvote.shangyouyun.cn";
+var baseUrl = "后台请求接口";
+
 
 var  HttpRequest={
     getRequest({ url, data = {}, method = "GET" }) {
